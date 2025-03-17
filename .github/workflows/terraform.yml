@@ -5,9 +5,17 @@ on:
     branches:
       - main
 
+  pull_request:
+    branches:
+      - main
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
@@ -22,5 +30,12 @@ jobs:
       - name: Inicializar Terraform
         run: terraform init
 
-      - name: Aplicar Terraform
-        run: terraform apply -auto-approve
+      - name: Validar 
+        run: terraform validate
+
+      - name: Planejar 
+        run: terraform plan -out=tfplan
+
+      - name: Aplicar 
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
