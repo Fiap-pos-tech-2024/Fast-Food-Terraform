@@ -32,10 +32,3 @@ jobs:
 
       - name: Validar 
         run: terraform validate
-
-      - name: Planejar 
-        run: terraform plan -out=tfplan
-
-      - name: Aplicar 
-        if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve tfplan
