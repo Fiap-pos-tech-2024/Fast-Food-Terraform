@@ -20,11 +20,6 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
-      - name: Configurar AWS
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: us-east-1
-
       - name: Inicializar Terraform
         run: terraform init
         
